@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="xhtml">
+    
+    <borderlayout width="100%" height="100%" style="background-color:#EEE;">
+    
+        <north height="120px" style="background-color:#ffd;"></north>
+        
+        <center style="background-color:#EEE;">
+            <div self="@{insert(main)}" />
+        </center>
+        
+        <south height="80px" style="background-color:#ffd;"></south>
+    
+    </borderlayout>
+
+</zk>

@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="ZK653App6">
+    <output-path>$PROJECT_DIR$/out/artifacts/ZK653App6</output-path>
+    <root id="root">
+      <element id="archive" name="ZK653App6.jar">
+        <element id="module-output" name="ZK653App6" />
+      </element>
+    </root>
+  </artifact>
+</component>

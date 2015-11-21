@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="../template.zul" ?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="xhtml">
+    <window self="@{define(main)}" apply="org.zkoss.bind.BindComposer"
+            id="ListVotes" title="Novo voto" border="normal"
+            width="100%" height="100%" position="center,center"
+            viewModel="@id('voteVM') @init('controller.VoteVM')">
+        
+        <grid>
+            <columns>
+                <column height="0px" hflex="1" />
+                <column height="0px" hflex="3" />
+            </columns>
+            <rows>
+                <row>
+                    Nome:
+                    <vlayout>
+                        <textbox width="90%" tabindex="2" height="35px" />
+                    </vlayout>
+                </row>
+                <row>
+                    Programa:
+                    <vlayout>
+                        <combobox model="@load(voteVM.listGrids)" width="90%" tabindex="2">                                
+                            <template name="model">
+                                <comboitem label="@load(each.name)" width="90%" height="35px" />
+                            </template>                                
+                        </combobox>
+                    </vlayout>
+                </row>
+                <row>
+                    Avaliação:
+                    <vlayout>
+                        <combobox model="@load(voteVM.rating)" width="90%" tabindex="2" selectedItem="@bind(voteVM.rating[0])">                                
+                            <template name="model">
+                                <comboitem label="@load(each)" width="90%" height="35px" image="@load(voteVM.getIconImage(each))" />
+                            </template>                                
+                        </combobox>
+                    </vlayout>
+                </row>
+                <row>
+                    Comentário:
+                    <vlayout>
+                        <textbox width="90%" tabindex="11" height="100px" />
+                    </vlayout>
+                </row>
+                <row>
+                    <cell colspan="2" align="center" >
+                        <button label="Votar" height="35px" width="150px"  
+                                    onClick="@command('saveVote')"    />                        
+                    </cell>
+                </row>
+            </rows>            
+        </grid>
+        
+    </window>
+</zk>

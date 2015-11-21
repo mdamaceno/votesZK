@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="../template.zul" ?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window self="@{define(main)}" apply="org.zkoss.bind.BindComposer"
+            id="ListUsers" title="Lista de usuários" border="normal"
+            width="100%" height="100%" position="center,center"
+            viewModel="@id('userVM') @init('controller.UserVM')">
+        
+        <listbox id="grid"
+                 model="@load(userVM.listUsers)" emptyMessage="Nenhum usuário cadastrado"
+                 mold="paging" pageSize="5">
+            
+            <listhead>
+                <listheader hflex="1" label="ID" align="left"/>
+                <listheader hflex="3" label="NOME" align="left"/>
+                <listheader hflex="3" label="EMAIL" align="left"/>
+            </listhead>
+            
+            <template name="model">
+                <listitem>
+                    <listcell label="@load(each.id)" />
+                    <listcell label="@load(each.name)" />
+                    <listcell label="@load(each.email)" />
+                </listitem>
+            </template>
+            
+        </listbox>
+        
+    </window>
+</zk>
