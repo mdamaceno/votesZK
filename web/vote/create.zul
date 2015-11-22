@@ -22,7 +22,7 @@
                 <row>
                     Programa:
                     <vlayout>
-                        <combobox model="@load(voteVM.listGrids)" width="90%" tabindex="2">                                
+                        <combobox model="@load(voteVM.listGrids)" id="gridCombobox" width="90%" tabindex="2" selectedItem="@bind(voteVM.selectedGrid)">                                
                             <template name="model">
                                 <comboitem label="@load(each.name)" width="90%" height="35px" />
                             </template>                                
@@ -32,7 +32,7 @@
                 <row>
                     Avaliação:
                     <vlayout>
-                        <combobox model="@load(voteVM.rating)" width="90%" tabindex="2" selectedItem="@bind(voteVM.rating[0])">                                
+                        <combobox model="@load(voteVM.rating)" width="90%" tabindex="2" selectedItem="@bind(voteVM.selectedScale)">                                
                             <template name="model">
                                 <comboitem label="@load(each)" width="90%" height="35px" image="@load(voteVM.getIconImage(each))" />
                             </template>                                

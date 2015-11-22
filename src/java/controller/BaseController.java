@@ -15,4 +15,16 @@ import javax.persistence.Persistence;
 public class BaseController
 {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("ZK653App6PU");
+    
+    public String select = "Selecione";
+
+    public String getSelect()
+    {
+        return select;
+    }
+
+    public void setSelect(String select)
+    {
+        this.select = select;
+    }
 }
