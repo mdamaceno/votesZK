@@ -47,8 +47,8 @@
                 </row>
                 <row>
                     <cell colspan="2" align="center" >
-                        <button label="Votar" height="35px" width="150px"  
-                                    onClick="@command('saveVote')"    />                        
+                        <button label="Atualizar" height="35px" width="150px"  
+                                    onClick="@command('updateVote')"    />                        
                     </cell>
                 </row>
             </rows>            

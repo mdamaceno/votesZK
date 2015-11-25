@@ -12,9 +12,10 @@ import java.util.List;
 import model.Grid;
 import model.Vote;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zul.Combobox;
+import org.zkoss.zk.ui.event.Event;
 
 /**
  *
@@ -28,8 +29,11 @@ public class VoteVM extends BaseController
     private String rating[];
 
     private Vote vote;
+    private String comment;
     private Grid selectedGrid;
     private String selectedScale = null;
+
+    private Vote voteSelected = null;
 
     private final static String iconLocation = "/images/star_%s.png";
 
@@ -47,19 +51,48 @@ public class VoteVM extends BaseController
     }
 
     @Command
+    @NotifyChange({"comment"})
+    public void goToVoteEdit()
+    {
+        comment = voteSelected.getComment();
+        Executions.sendRedirect("edit.zul?voteId=" + voteSelected.getId());
+    }
+
+    @Command
     public void saveVote()
     {
-        vote = new Vote();
-        vote.setComment("jfbsdfj");
-        vote.setScale(Integer.parseInt(selectedScale));
-        vote.setUserId(new UserJpaController(emf).findUser(1));
-        vote.setGridId(new GridJpaController(emf).findGrid(selectedGrid.getId()));
-        //new VoteJpaController(emf).create(vote);
+        try {
+            vote = new Vote();
+            vote.setComment(comment);
+            vote.setScale(Integer.parseInt(selectedScale));
+            vote.setUserId(new UserJpaController(emf).findUser(1));
+            vote.setGridId(new GridJpaController(emf).findGrid(selectedGrid.getId()));
 
-        /* Inserir trycatch */
-        
-            Messagebox.show(vote.getGridId().getName());
+            new VoteJpaController(emf).create(vote);
 
+            Messagebox.show("Voto registrado com sucesso!",
+                    "", Messagebox.OK, Messagebox.INFORMATION, (Event t) -> {
+                        if (t.getName().equals("onOK")) {
+                            Executions.sendRedirect("index.zul");
+                        }
+                    });
+        } catch (Exception ex) {
+            System.out.println("=============> " + ex.getMessage());
+        }
+    }
+
+    @Command
+    public void destroyVote()
+    {
+        if (voteSelected != null) {
+            Messagebox.show("Deseja excluir este voto?",
+                    "Deseja excluir este voto?", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION, (Event t) -> {
+                        if (t.getName().equals("onYes")) {
+                            new VoteJpaController(emf).destroy(voteSelected.getId());
+                            Executions.sendRedirect("index.zul");
+                        }
+                    });
+        }
     }
 
     public List<Vote> getListVotes()
@@ -150,6 +183,16 @@ public class VoteVM extends BaseController
         }
     }
 
+    public String getComment()
+    {
+        return comment;
+    }
+
+    public void setComment(String comment)
+    {
+        this.comment = comment;
+    }
+
     public Vote getVote()
     {
         return vote;
@@ -158,6 +201,16 @@ public class VoteVM extends BaseController
     public void setVote(Vote vote)
     {
         this.vote = vote;
+    }
+
+    public Vote getVoteSelected()
+    {
+        return voteSelected;
+    }
+
+    public void setVoteSelected(Vote voteSelected)
+    {
+        this.voteSelected = voteSelected;
     }
 
 }

@@ -9,13 +9,13 @@
         
         <hbox width="100%" spacing="30px">
             <button label="Novo" height="33px" width="136px" onClick="@command('goToVoteCreate')" />
-            <button label="Alterar" height="33px" width="136px" />
-            <button label="Excluir" height="33px" width="136px" />
+            <button label="Alterar" height="33px" width="136px" onClick="@command('goToVoteEdit')" />
+            <button label="Excluir" height="33px" width="136px" onClick="@command('destroyVote')" />
         </hbox>
        
         <listbox id="grid"
                  model="@load(voteVM.listVotes)" emptyMessage="Nenhum voto cadastrado"
-                 mold="paging" pageSize="5">
+                 mold="paging" pageSize="5" selectedItem="@bind(voteVM.voteSelected)">
             
             <listhead>
                 <listheader hflex="3" label="QUEM VOTOU" align="left"/>
