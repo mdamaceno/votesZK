@@ -12,6 +12,7 @@ import java.util.List;
 import model.Grid;
 import model.Vote;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
@@ -34,11 +35,23 @@ public class VoteVM extends BaseController
     private String selectedScale = null;
 
     private Vote voteSelected = null;
+    private String voteId;
 
     private final static String iconLocation = "/images/star_%s.png";
 
-    public VoteVM()
+    @Init
+    @NotifyChange({"voteId"})
+    public void init()
     {
+        voteId = Executions.getCurrent().getParameter("voteId");
+
+        if (voteId != null) {
+            vote = new VoteJpaController(emf).findVote(Integer.parseInt(voteId));
+            selectedGrid = new GridJpaController(emf).findGrid(vote.getGridId().getId());
+            selectedScale = String.valueOf(vote.getScale());
+            comment = vote.getComment();
+        }
+
         this.rating = new String[]{"Péssimo", "Ruim", "Regular", "Bom", "Excelente"};
         this.listGrids = new GridJpaController(emf).findGridEntities();
         this.listVotes = new VoteJpaController(emf).findVoteEntities();
@@ -62,20 +75,37 @@ public class VoteVM extends BaseController
     public void saveVote()
     {
         try {
-            vote = new Vote();
-            vote.setComment(comment);
-            vote.setScale(Integer.parseInt(selectedScale));
-            vote.setUserId(new UserJpaController(emf).findUser(1));
-            vote.setGridId(new GridJpaController(emf).findGrid(selectedGrid.getId()));
+            if (voteId == null) {
+                vote = new Vote();
+                vote.setComment(comment);
+                vote.setScale(Integer.parseInt(selectedScale));
+                vote.setUserId(new UserJpaController(emf).findUser(1));
+                vote.setGridId(new GridJpaController(emf).findGrid(selectedGrid.getId()));
 
-            new VoteJpaController(emf).create(vote);
+                new VoteJpaController(emf).create(vote);
 
-            Messagebox.show("Voto registrado com sucesso!",
-                    "", Messagebox.OK, Messagebox.INFORMATION, (Event t) -> {
-                        if (t.getName().equals("onOK")) {
-                            Executions.sendRedirect("index.zul");
-                        }
-                    });
+                Messagebox.show("Voto registrado com sucesso!",
+                        "", Messagebox.OK, Messagebox.INFORMATION, (Event t) -> {
+                            if (t.getName().equals("onOK")) {
+                                Executions.sendRedirect("index.zul");
+                            }
+                        });
+            } else {
+                vote = new VoteJpaController(emf).findVote(Integer.parseInt(voteId));
+                vote.setComment(comment);
+                vote.setScale(Integer.parseInt(selectedScale));
+                vote.setUserId(new UserJpaController(emf).findUser(1));
+                vote.setGridId(new GridJpaController(emf).findGrid(selectedGrid.getId()));
+
+                new VoteJpaController(emf).edit(vote);
+
+                Messagebox.show("Voto atualizado com sucesso!",
+                        "", Messagebox.OK, Messagebox.INFORMATION, (Event t) -> {
+                            if (t.getName().equals("onOK")) {
+                                Executions.sendRedirect("index.zul");
+                            }
+                        });
+            }
         } catch (Exception ex) {
             System.out.println("=============> " + ex.getMessage());
         }
@@ -213,4 +243,13 @@ public class VoteVM extends BaseController
         this.voteSelected = voteSelected;
     }
 
+    public String getVoteId()
+    {
+        return voteId;
+    }
+
+    public void setVoteId(String voteId)
+    {
+        this.voteId = voteId;
+    }
 }

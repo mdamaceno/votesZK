@@ -7,6 +7,10 @@
             width="100%" height="100%" position="center,center"
             viewModel="@id('voteVM') @init('controller.VoteVM')">
         
+        <zscript>
+            String id = Executions.getCurrent().getParameter("voteId");
+        </zscript>
+        
         <grid>
             <columns>
                 <column height="0px" hflex="1" />
@@ -18,11 +22,12 @@
                     <vlayout>
                         <textbox width="90%" tabindex="2" height="35px" />
                     </vlayout>
+                    <h:input type="hidden" value="${id}"></h:input>
                 </row>
                 <row>
                     Programa:
                     <vlayout>
-                        <combobox model="@load(voteVM.listGrids)" id="gridCombobox" width="90%" tabindex="2" selectedItem="@bind(voteVM.selectedGrid)">                                
+                        <combobox model="@load(voteVM.listGrids)" id="gridCombobox" width="90%" tabindex="2" value="@load(voteVM.selectedGrid.name)" selectedItem="@bind(voteVM.selectedGrid)">                                
                             <template name="model">
                                 <comboitem label="@load(each.name)" width="90%" height="35px" />
                             </template>                                
@@ -32,7 +37,7 @@
                 <row>
                     Avaliação:
                     <vlayout>
-                        <combobox model="@load(voteVM.rating)" width="90%" tabindex="2" selectedItem="@bind(voteVM.selectedScale)">                                
+                        <combobox model="@load(voteVM.rating)" width="90%" tabindex="2" value="@load(voteVM.selectedScale)" selectedItem="@bind(voteVM.selectedScale)">                                
                             <template name="model">
                                 <comboitem label="@load(each)" width="90%" height="35px" image="@load(voteVM.getIconImage(each))" />
                             </template>                                
@@ -48,7 +53,7 @@
                 <row>
                     <cell colspan="2" align="center" >
                         <button label="Atualizar" height="35px" width="150px"  
-                                    onClick="@command('updateVote')"    />                        
+                                onClick="@command('saveVote')"    />                        
                     </cell>
                 </row>
             </rows>            
