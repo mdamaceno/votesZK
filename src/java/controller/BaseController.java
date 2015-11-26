@@ -7,6 +7,9 @@ package controller;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.zkoss.zhtml.Messagebox;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
 
 /**
  *
@@ -14,8 +17,9 @@ import javax.persistence.Persistence;
  */
 public class BaseController
 {
+
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("ZK653App6PU");
-    
+
     public String select = "Selecione";
 
     public String getSelect()
@@ -26,5 +30,15 @@ public class BaseController
     public void setSelect(String select)
     {
         this.select = select;
+    }
+
+    public void messageOk(String msg)
+    {
+        Messagebox.show(msg,
+                "", Messagebox.OK, Messagebox.INFORMATION, (Event t) -> {
+                    if (t.getName().equals("onOK")) {
+                        Executions.sendRedirect("index.zul");
+                    }
+                });
     }
 }

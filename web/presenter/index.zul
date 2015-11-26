@@ -7,9 +7,15 @@
         width="100%" height="100%" position="center,center"
         viewModel="@id('presenterVM') @init('controller.PresenterVM')">
         
+        <hbox width="100%" spacing="30px">
+            <button label="Novo" height="33px" width="136px" onClick="@command('goToPresenterCreate')" />
+            <button label="Alterar" height="33px" width="136px" onClick="@command('goToPresenterEdit')" />
+            <button label="Excluir" height="33px" width="136px" onClick="@command('destroyPresenter')" />
+        </hbox>
+        
         <listbox id="grid"
                  model="@load(presenterVM.listPresenters)" emptyMessage="Nenhum apresentador cadastrado"
-                 mold="paging" pageSize="5">
+                 mold="paging" pageSize="5" selectedItem="@bind(presenterVM.presenterSelected)">
             
             <listhead>
                 <listheader hflex="1" label="ID" align="left"/>

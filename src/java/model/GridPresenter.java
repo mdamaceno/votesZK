@@ -28,9 +28,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "GridPresenter.findAll", query = "SELECT g FROM GridPresenter g"),
-    @NamedQuery(name = "GridPresenter.findById", query = "SELECT g FROM GridPresenter g WHERE g.id = :id")})
+    @NamedQuery(name = "GridPresenter.findById", query = "SELECT g FROM GridPresenter g WHERE g.id = :id"),
+    @NamedQuery(name = "GridPresenter.findAllByPresenterId", query = "SELECT g FROM GridPresenter g WHERE g.presenterId.id = :presenterId")})
 public class GridPresenter implements Serializable
 {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -110,5 +112,5 @@ public class GridPresenter implements Serializable
     {
         return "model.GridPresenter[ id=" + id + " ]";
     }
-    
+
 }

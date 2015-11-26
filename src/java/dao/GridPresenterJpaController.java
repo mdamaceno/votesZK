@@ -7,6 +7,7 @@ package dao;
 
 import dao.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -204,5 +205,17 @@ public class GridPresenterJpaController implements Serializable
             em.close();
         }
     }
-    
+
+    public List<GridPresenter> findAllByPresenterId(int presenterId)
+    {
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createNamedQuery("GridPresenter.findAllByPresenterId");
+            query.setParameter("presenterId", presenterId);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }
