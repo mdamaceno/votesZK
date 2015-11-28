@@ -30,15 +30,18 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author mdamaceno
  */
 @Entity
-@Table(catalog = "opinion", name="grid", schema = "")
+@Table(catalog = "opinion", name = "grid", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Grid.findAll", query = "SELECT g FROM Grid g"),
     @NamedQuery(name = "Grid.findById", query = "SELECT g FROM Grid g WHERE g.id = :id"),
     @NamedQuery(name = "Grid.findByName", query = "SELECT g FROM Grid g WHERE g.name = :name"),
-    @NamedQuery(name = "Grid.findBySchedule", query = "SELECT g FROM Grid g WHERE g.schedule = :schedule")})
+    @NamedQuery(name = "Grid.findBySchedule", query = "SELECT g FROM Grid g WHERE g.schedule = :schedule"),
+    @NamedQuery(name = "Grid.findByLastId", query = "SELECT MAX(g.id) from Grid g")
+})
 public class Grid implements Serializable
 {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -162,5 +165,5 @@ public class Grid implements Serializable
     {
         return "model.Grid[ id=" + id + " ]";
     }
-    
+
 }

@@ -264,5 +264,16 @@ public class GridJpaController implements Serializable
             em.close();
         }
     }
-    
+
+    public int findByLastId()
+    {
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createNamedQuery("Grid.findByLastId");
+            return (int) query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
 }

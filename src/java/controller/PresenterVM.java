@@ -12,7 +12,6 @@ import model.GridPresenter;
 import model.Presenter;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
-import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
@@ -65,14 +64,14 @@ public class PresenterVM extends BaseController
 
                 new PresenterJpaController(emf).create(presenter);
 
-                messageOk("Apresentador atualizado com sucesso!");
+                messageOk("Apresentador registrado com sucesso!");
             } else {
                 presenter = new PresenterJpaController(emf).findPresenter(Integer.parseInt(presenterId));
                 presenter.setName(name);
 
                 new PresenterJpaController(emf).edit(presenter);
 
-                messageOk("Apresentador registrado com sucesso!");
+                messageOk("Apresentador atualizado com sucesso!");
             }
         } catch (Exception ex) {
             System.out.println("=============> " + ex.getMessage());

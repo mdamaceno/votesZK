@@ -217,5 +217,17 @@ public class GridPresenterJpaController implements Serializable
             em.close();
         }
     }
+    
+    public List<GridPresenter> findAllByGridId(int gridId)
+    {
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createNamedQuery("GridPresenter.findAllByGridId");
+            query.setParameter("gridId", gridId);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
 }

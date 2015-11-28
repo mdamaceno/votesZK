@@ -29,7 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "GridPresenter.findAll", query = "SELECT g FROM GridPresenter g"),
     @NamedQuery(name = "GridPresenter.findById", query = "SELECT g FROM GridPresenter g WHERE g.id = :id"),
-    @NamedQuery(name = "GridPresenter.findAllByPresenterId", query = "SELECT g FROM GridPresenter g WHERE g.presenterId.id = :presenterId")})
+    @NamedQuery(name = "GridPresenter.findAllByPresenterId", query = "SELECT g FROM GridPresenter g WHERE g.presenterId.id = :presenterId"),
+    @NamedQuery(name = "GridPresenter.findAllByGridId", query = "SELECT g FROM GridPresenter g WHERE g.gridId.id = :gridId")
+})
 public class GridPresenter implements Serializable
 {
 
