@@ -8,7 +8,6 @@ package controller;
 import dao.GridJpaController;
 import dao.GridPresenterJpaController;
 import dao.PresenterJpaController;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
