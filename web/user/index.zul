@@ -9,7 +9,7 @@
         
         <hbox width="100%" spacing="30px">
             <button label="Novo" height="33px" width="136px" onClick="@command('goToUserCreate')" />
-            <button label="Alterar" height="33px" width="136px" />
+            <button label="Alterar" height="33px" width="136px" onClick="@command('goToUserEdit')" />
             <button label="Excluir" height="33px" width="136px" onClick="@command('destroyUser')" />
         </hbox>
         
