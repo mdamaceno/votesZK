@@ -39,6 +39,7 @@ public class LoginVM
     }
 
     @Command
+    @NotifyChange({"user"})
     public void makeLogin()
     {
         user = new UserJpaController(emf).findByDoc(doc);

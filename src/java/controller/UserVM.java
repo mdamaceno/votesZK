@@ -34,6 +34,8 @@ public class UserVM extends BaseController
     @Init
     public void init()
     {
+        redirectIfNotLogged();
+        
         userId = Executions.getCurrent().getParameter("userId");
         listUsers = new UserJpaController(emf).findUserEntities();
         

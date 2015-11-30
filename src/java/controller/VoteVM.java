@@ -47,6 +47,8 @@ public class VoteVM extends BaseController
     @NotifyChange({"voteId"})
     public void init()
     {
+        redirectIfNotLogged();
+                
         voteId = Executions.getCurrent().getParameter("voteId");
 
         if (voteId != null) {
@@ -73,6 +75,7 @@ public class VoteVM extends BaseController
     @NotifyChange({"comment"})
     public void goToVoteEdit()
     {
+        redirectIfNotAdmin();
         comment = voteSelected.getComment();
         Executions.sendRedirect("edit.zul?voteId=" + voteSelected.getId());
     }
@@ -94,14 +97,19 @@ public class VoteVM extends BaseController
                 Messagebox.show("Voto registrado com sucesso!",
                         "", Messagebox.OK, Messagebox.INFORMATION, (Event t) -> {
                             if (t.getName().equals("onOK")) {
-                                Executions.sendRedirect("index.zul");
+                                if (user.getAdmin() == true) {
+                                    Executions.sendRedirect("index.zul");
+                                } else {
+                                    Executions.sendRedirect("/index.zul");
+                                }
                             }
                         });
             } else {
+                User user = (User) Sessions.getCurrent().getAttribute("user");
                 vote = new VoteJpaController(emf).findVote(Integer.parseInt(voteId));
                 vote.setComment(comment);
                 vote.setScale(Integer.parseInt(selectedScale));
-                vote.setUserId(new UserJpaController(emf).findUser(1));
+                vote.setUserId(new UserJpaController(emf).findUser(user.getId()));
                 vote.setGridId(new GridJpaController(emf).findGrid(selectedGrid.getId()));
 
                 new VoteJpaController(emf).edit(vote);

@@ -32,6 +32,8 @@ public class PresenterVM extends BaseController
     @Init
     public void init()
     {
+        redirectIfNotLogged();
+                
         presenterId = Executions.getCurrent().getParameter("presenterId");
 
         if (presenterId != null) {

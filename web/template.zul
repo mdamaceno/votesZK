@@ -3,17 +3,24 @@
 <zk xmlns="http://www.zkoss.org/2005/zul"
     xmlns:h="xhtml">
     
+    <zscript>
+        import model.User;
+        User user = (User) Sessions.getCurrent().getAttribute("user");
+    </zscript>
+    
     <borderlayout width="100%" height="100%" style="background-color:#EEE;">
     
         <north height="120px" style="background-color:#ffd;">
             <div>
-                <h:a href="/index.zul">Home</h:a> | 
-                <h:a href="/grid/index.zul">Programação</h:a> | 
-                <h:a href="/presenter/index.zul">Apresentadores</h:a> | 
-                <h:a href="/vote/index.zul">Votos</h:a> | 
-                <h:a href="/ranking/index.zul">Ranking</h:a> | 
-                <h:a href="/user/index.zul">Usuários</h:a> | 
-                <h:a href="/login/destroy.zul">Sair</h:a>
+                <h:a href="/index.zul">Home</h:a> -
+                <h:a href="/grid/index.zul" if="${user.getAdmin() == true}">Programação</h:a> -
+                <h:a href="/presenter/index.zul" if="${user.getAdmin() == true}">Apresentadores</h:a> -
+                <h:a href="/vote/index.zul" if="${user.getAdmin() == true}">Votos</h:a> -
+                <h:a href="/ranking/index.zul" if="${user.getAdmin() == true}">Ranking</h:a> -
+                <h:a href="/user/index.zul" if="${user.getAdmin() == true}">Usuários</h:a> -
+                <h:a href="/vote/create.zul" if="${user.getAdmin() == false}">Votar</h:a> -
+                <h:a href="/login/destroy.zul" if="${user != null}">Sair</h:a>     
+                <h:a href="/login/create.zul" if="${user == null}">Entrar</h:a>                
             </div>
         </north>
         

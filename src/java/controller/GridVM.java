@@ -19,6 +19,7 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 
 /**
@@ -44,6 +45,8 @@ public class GridVM extends BaseController
     @Init
     public void init()
     {
+        redirectIfNotLogged();
+        
         listGrids = new GridJpaController(emf).findGridEntities();
         listPresenters = new PresenterJpaController(emf).findPresenterEntities();
     }

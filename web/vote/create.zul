@@ -14,12 +14,6 @@
             </columns>
             <rows>
                 <row>
-                    Nome:
-                    <vlayout>
-                        <textbox width="90%" tabindex="2" height="35px" />
-                    </vlayout>
-                </row>
-                <row>
                     Programa:
                     <vlayout>
                         <combobox model="@load(voteVM.listGrids)" id="gridCombobox" width="90%" tabindex="2" selectedItem="@bind(voteVM.selectedGrid)">                                
