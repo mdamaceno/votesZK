@@ -211,4 +211,15 @@ public class UserJpaController implements Serializable
         }
     }
     
+    public User findByDoc(String doc) {
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createNamedQuery("User.findByDoc");
+            query.setParameter("doc", doc);
+            return (User) query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+    
 }

@@ -5,10 +5,14 @@
  */
 package controller;
 
+import dao.UserJpaController;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import model.User;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 
 /**
@@ -17,10 +21,18 @@ import org.zkoss.zk.ui.event.Event;
  */
 public class BaseController
 {
+    
+    private String doc;
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("ZK653App6PU");
 
     public String select = "Selecione";
+    
+    public BaseController() {
+        if (Sessions.getCurrent().getAttribute("user")==null) {
+            Executions.sendRedirect("/login/create.zul");
+        }
+    }
 
     public String getSelect()
     {
@@ -40,5 +52,15 @@ public class BaseController
                         Executions.sendRedirect("index.zul");
                     }
                 });
+    }
+
+    public String getDoc()
+    {
+        return doc;
+    }
+
+    public void setDoc(String doc)
+    {
+        this.doc = doc;
     }
 }

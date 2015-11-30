@@ -11,7 +11,9 @@
                 <h:a href="/grid/index.zul">Programação</h:a> | 
                 <h:a href="/presenter/index.zul">Apresentadores</h:a> | 
                 <h:a href="/vote/index.zul">Votos</h:a> | 
-                <h:a href="/user/index.zul">Usuários</h:a>
+                <h:a href="/ranking/index.zul">Ranking</h:a> | 
+                <h:a href="/user/index.zul">Usuários</h:a> | 
+                <h:a href="/login/destroy.zul">Sair</h:a>
             </div>
         </north>
         

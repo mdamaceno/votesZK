@@ -10,12 +10,14 @@ import dao.UserJpaController;
 import dao.VoteJpaController;
 import java.util.List;
 import model.Grid;
+import model.User;
 import model.Vote;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 
 /**
@@ -36,6 +38,8 @@ public class VoteVM extends BaseController
 
     private Vote voteSelected = null;
     private String voteId;
+    
+    private List<Vote> ranking;
 
     private final static String iconLocation = "/images/star_%s.png";
 
@@ -55,6 +59,8 @@ public class VoteVM extends BaseController
         this.rating = new String[]{"Péssimo", "Ruim", "Regular", "Bom", "Excelente"};
         this.listGrids = new GridJpaController(emf).findGridEntities();
         this.listVotes = new VoteJpaController(emf).findVoteEntities();
+        
+        this.ranking = new VoteJpaController(emf).averageByScale();
     }
 
     @Command
@@ -76,10 +82,11 @@ public class VoteVM extends BaseController
     {
         try {
             if (voteId == null) {
+                User user = (User) Sessions.getCurrent().getAttribute("user");
                 vote = new Vote();
                 vote.setComment(comment);
                 vote.setScale(Integer.parseInt(selectedScale));
-                vote.setUserId(new UserJpaController(emf).findUser(1));
+                vote.setUserId(new UserJpaController(emf).findUser(user.getId()));
                 vote.setGridId(new GridJpaController(emf).findGrid(selectedGrid.getId()));
 
                 new VoteJpaController(emf).create(vote);
@@ -124,6 +131,8 @@ public class VoteVM extends BaseController
                     });
         }
     }
+    
+    
 
     public List<Vote> getListVotes()
     {
@@ -251,5 +260,15 @@ public class VoteVM extends BaseController
     public void setVoteId(String voteId)
     {
         this.voteId = voteId;
+    }
+
+    public List<Vote> getRanking()
+    {
+        return ranking;
+    }
+
+    public void setRanking(List<Vote> ranking)
+    {
+        this.ranking = ranking;
     }
 }

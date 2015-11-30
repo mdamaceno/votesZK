@@ -25,14 +25,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author mdamaceno
  */
 @Entity
-@Table(catalog = "opinion", name="vote", schema = "")
+@Table(catalog = "opinion", name = "vote", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Vote.findAll", query = "SELECT v FROM Vote v"),
     @NamedQuery(name = "Vote.findById", query = "SELECT v FROM Vote v WHERE v.id = :id"),
-    @NamedQuery(name = "Vote.findByScale", query = "SELECT v FROM Vote v WHERE v.scale = :scale")})
+    @NamedQuery(name = "Vote.findByScale", query = "SELECT v FROM Vote v WHERE v.scale = :scale"),
+    @NamedQuery(name = "Vote.averageByScale", query = "SELECT v, AVG(v.scale) FROM Vote v GROUP BY v.gridId.id ORDER BY v.scale DESC")
+})
 public class Vote implements Serializable
 {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -144,5 +147,5 @@ public class Vote implements Serializable
     {
         return "model.Vote[ id=" + id + " ]";
     }
-    
+
 }

@@ -205,4 +205,14 @@ public class VoteJpaController implements Serializable
         }
     }
     
+    public List<Vote> averageByScale() {
+        EntityManager em = getEntityManager();
+        try {
+            Query query = em.createNamedQuery("Vote.averageByScale");
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
 }
